@@ -20,7 +20,7 @@ class BottomNavBar extends StatelessWidget {
           label: 'Explore',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.search),
+          icon: Icon(Icons.person_3),
           label: 'Following',
         ),
         BottomNavigationBarItem(

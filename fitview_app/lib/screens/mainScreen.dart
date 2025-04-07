@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'explore_screen.dart';
+import 'following_screen.dart';
 import 'me_screen.dart';
 import '../widget/bottomNavBar.dart'; // Import your BottomNavBar widget
 
@@ -13,7 +14,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _pages = [
     ExploreScreen(),
-    //FollowingPage(),
+    FollowingScreen(),
     MeScreen(),
   ];
 
