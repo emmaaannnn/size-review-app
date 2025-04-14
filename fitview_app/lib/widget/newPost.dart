@@ -29,6 +29,18 @@ class _NewPostState extends State<NewPost> {
             maxLength: 40,
             decoration: InputDecoration(label: Text('Expense Title')),
           ),
+
+          TextField(
+            onChanged: _handleTitleEntry,
+            maxLength: 40,
+            decoration: InputDecoration(label: Text('HELLO')),
+          ),
+
+          TextField(
+            onChanged: _handleTitleEntry,
+            maxLength: 40,
+            decoration: InputDecoration(label: Text('NO')),
+          ),
         ],
       ),
     );

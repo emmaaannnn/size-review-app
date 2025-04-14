@@ -14,7 +14,8 @@ class BottomNavBar extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: onTap,
-      items: const [
+      iconSize: 30.0,
+      items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Explore',
