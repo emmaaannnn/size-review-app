@@ -22,10 +22,10 @@ class PostWidget extends StatelessWidget {
             ),
           ),
           
-          Image.network(
+          Image.asset(
             post.photoUrl,
             width: MediaQuery.of(context).size.width,
-            height: 200.0,
+            height: 450.0,
             fit: BoxFit.cover,
           ),
           
