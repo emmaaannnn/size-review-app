@@ -5,7 +5,7 @@ List<Post> dummyPosts = [
   Post(
     id: '1',
     username: 'FashionGuru',
-    photoUrl: 'https://via.placeholder.com/150',
+    photoUrl: 'fitview_app/data/test1.jpg',
     clothingSizes: ['M'],
     userHeight: 165.0,
     bodyType: BodyType.slim,

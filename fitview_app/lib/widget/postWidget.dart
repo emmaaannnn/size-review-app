@@ -21,7 +21,14 @@ class PostWidget extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
             ),
           ),
-          Image.network(post.photoUrl),
+          
+          Image.network(
+            post.photoUrl,
+            width: MediaQuery.of(context).size.width,
+            height: 200.0,
+            fit: BoxFit.cover,
+          ),
+          
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text('Sizes: ${post.clothingSizes.join(", ")}'),
