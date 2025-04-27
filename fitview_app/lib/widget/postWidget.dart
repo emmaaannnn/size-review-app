@@ -14,11 +14,13 @@ class PostWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              post.username,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                post.username,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+              ),
             ),
           ),
           
@@ -28,41 +30,85 @@ class PostWidget extends StatelessWidget {
             height: 450.0,
             fit: BoxFit.cover,
           ),
-          
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text('Sizes: ${post.clothingSizes.join(", ")}'),
+
+          Row(
+            children: [
+              Text(
+                'Sizes: ',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(post.clothingSizes.join(", ")),
+            ],
           ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              'Height: ${post.userHeight} cm',
-            ),
+          Row(
+            children: [
+              Text(
+                'Height: ',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text('${post.userHeight} cm'),
+            ],
+          ),
+          Row(
+            children: [
+              Text(
+                'Body Type: ',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(post.bodyType.displayName),
+            ],
+          ),
+          Row(
+            children: [
+              Text(
+                'Expected Fit: ',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(post.expectedFit.displayName),
+            ],
+          ),
+          Row(
+            children: [
+              Text(
+                'Actual Fit: ',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(post.actualFit.displayName),
+            ],
           ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              'Body Type: ${post.bodyType.displayName}',
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              'Expected Fit: ${post.expectedFit.displayName}',
-            ),
-          ),
-          
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              'Actual Fit: ${post.actualFit.displayName}',
+           Center(
+            child: ElevatedButton(
+              onPressed: () {
+                _showDescription(context, post.description);
+              },
+              child: Text('Show More Details'),
             ),
           ),
         ],
       ),
     );
   }
+
+  void _showDescription(BuildContext context, String? description) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Description'),
+          content: Text(description ?? 'No description available.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }

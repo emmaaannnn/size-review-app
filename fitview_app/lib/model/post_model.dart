@@ -10,7 +10,7 @@ class Post {
   final Fit expectedFit;
   final Fit actualFit; 
   final DateTime createdAt; // Timestamp of post creation
-
+  final String ? description; // Optional description of the post
 
   Post({
     required this.id,
@@ -22,6 +22,7 @@ class Post {
     required this.expectedFit,
     required this.actualFit,
     required this.createdAt,
+    this.description,
   });
 
 }
