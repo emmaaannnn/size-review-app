@@ -30,7 +30,6 @@ extension BodyTypeExtension on BodyType {
   }
 }
 
-
 enum Fit {
   slim,
   oversized,
