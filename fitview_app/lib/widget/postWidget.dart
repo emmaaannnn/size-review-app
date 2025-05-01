@@ -37,7 +37,7 @@ class PostWidget extends StatelessWidget {
                 'Sizes: ',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text(post.clothingSizes.join(", ")),
+              Text(post.clothingItems.join(", ")),
             ],
           ),
 
