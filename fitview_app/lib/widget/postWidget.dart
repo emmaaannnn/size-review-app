@@ -2,15 +2,23 @@ import 'package:fitview_app/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fitview_app/model/post_model.dart';
 
-class PostWidget extends StatelessWidget {
+class PostWidget extends StatefulWidget {
   final Post post;
 
   const PostWidget({Key? key, required this.post}) : super(key: key);
 
   @override
+  _PostWidgetState createState() => _PostWidgetState();
+}
+
+class _PostWidgetState extends State<PostWidget> {
+  bool _isExpanded = false;
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -18,14 +26,14 @@ class PostWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                post.username,
+                widget.post.username,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
               ),
             ),
           ),
           
           Image.asset(
-            post.photoUrl,
+            widget.post.photoUrl,
             width: MediaQuery.of(context).size.width,
             height: 450.0,
             fit: BoxFit.cover,
@@ -37,7 +45,20 @@ class PostWidget extends StatelessWidget {
                 'Sizes: ',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text(post.clothingItems.join(", ")),
+              RichText(
+                text: TextSpan(
+                  style: DefaultTextStyle.of(context).style, 
+                  children: widget.post.clothingItems.map((item) => TextSpan(
+                    text: '${item.type.displayName} ',
+                    children: [
+                      TextSpan(
+                        text: '(${item.size.displayName})',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  )).toList(),
+                ),
+              )
             ],
           ),
 
@@ -47,7 +68,7 @@ class PostWidget extends StatelessWidget {
                 'Height: ',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text('${post.userHeight} cm'),
+              Text('${widget.post.userHeight} cm'),
             ],
           ),
           Row(
@@ -56,7 +77,7 @@ class PostWidget extends StatelessWidget {
                 'Body Type: ',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text(post.bodyType.displayName),
+              Text(widget.post.bodyType.displayName),
             ],
           ),
           Row(
@@ -65,7 +86,7 @@ class PostWidget extends StatelessWidget {
                 'Expected Fit: ',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text(post.expectedFit.displayName),
+              Text(widget.post.expectedFit.displayName),
             ],
           ),
           Row(
@@ -74,41 +95,33 @@ class PostWidget extends StatelessWidget {
                 'Actual Fit: ',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text(post.actualFit.displayName),
+              Text(widget.post.actualFit.displayName),
             ],
           ),
 
            Center(
             child: ElevatedButton(
               onPressed: () {
-                _showDescription(context, post.description);
+                setState(() {
+                  _isExpanded = !_isExpanded;
+                });
               },
-              child: Text('Show More Details'),
+              child: Text(_isExpanded ? 'Hide Details' : 'Show More Details'),
             ),
           ),
+
+          if (_isExpanded)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                widget.post.description ?? 'No description available.',
+                style: TextStyle(fontSize: 14.0),
+              ),
+            ),
         ],
       ),
     );
   }
 
-  void _showDescription(BuildContext context, String? description) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Description'),
-          content: Text(description ?? 'No description available.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Close'),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
 }

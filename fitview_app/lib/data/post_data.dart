@@ -20,8 +20,7 @@ List<Post> dummyPosts = [
     username: 'StyleStar',
     photoUrl: 'lib/data/test2.jpg',
     clothingItems: [
-      ClothingItem(type: ClothingType.hoodie, size: ClothingSize.s),
-      ClothingItem(type: ClothingType.pants, size: ClothingSize.xs),
+      ClothingItem(type: ClothingType.sweatshirt, size: ClothingSize.s),
     ],
     userHeight: 155.0,
     bodyType: BodyType.athletic,
@@ -48,7 +47,6 @@ List<Post> dummyPosts = [
     photoUrl: 'lib/data/test4.jpg',
     clothingItems: [
       ClothingItem(type: ClothingType.jacket, size: ClothingSize.m),
-      ClothingItem(type: ClothingType.shorts, size: ClothingSize.l),
     ],
     userHeight: 180.0,
     bodyType: BodyType.athletic,
