@@ -75,61 +75,75 @@ class _NewPostState extends State<NewPost> {
           SizedBox(height: 10),
 
           // Clothing Type Selection
-          SizedBox(
-            width: double.infinity, // Makes it take the full screen width
-            child: DropdownButton<ClothingType>(
-              hint: Text("Select Clothing Type"),
-              value: _selectedClothingType,
-              onChanged: (newValue) {
-                setState(() {
-                  _selectedClothingType = newValue;
-                });
-              },
-              items: ClothingType.values.map((type) {
-                return DropdownMenuItem(
-                  value: type,
-                  child: Text(type.displayName),
-                );
-              }).toList(),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Adjust as needed
+            children: [
+              // Clothing Type Selection
+              Expanded(
+                child: DropdownButton<ClothingType>(
+                  hint: Text("Select Clothing Type"),
+                  value: _selectedClothingType,
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedClothingType = newValue;
+                    });
+                  },
+                  items: ClothingType.values.map((type) {
+                    return DropdownMenuItem(
+                      value: type,
+                      child: Text(type.displayName),
+                    );
+                  }).toList(),
+                ),
+              ),
+              
+              SizedBox(width: 16), // Adds some spacing between dropdowns
+              
+              // Clothing Size Selection
+              if (_selectedClothingType != null)
+                Expanded(
+                  child: DropdownButton<ClothingSize>(
+                    hint: Text("Select Clothing Size"),
+                    value: _selectedClothingSize,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _selectedClothingSize = newValue;
+                      });
+                    },
+                    items: ClothingSize.values.map((size) {
+                      return DropdownMenuItem(
+                        value: size,
+                        child: Text(size.displayName),
+                      );
+                    }).toList(),
+                  ),
+                ),
+            ],
           ),
-
-          // Clothing Size Selection
-          if (_selectedClothingType != null)
-            DropdownButton<ClothingSize>(
-              hint: Text("Select Clothing Size"),
-              value: _selectedClothingSize,
-              onChanged: (newValue) {
-                setState(() {
-                  _selectedClothingSize = newValue;
-                });
-              },
-              items: ClothingSize.values.map((size) {
-                return DropdownMenuItem(
-                  value: size,
-                  child: Text(size.displayName),
-                );
-              }).toList(),
-            ),
 
 
           SizedBox(height: 10),
 
-          // Expected Fit Selection
-          DropdownButton<Fit>(
-            hint: Text("Select Expected Fit"),
-            value: _expectedFit,
-            onChanged: (newValue) {
-              setState(() {
-                _expectedFit = newValue;
-              });
-            },
-            items: Fit.values.map((fit) {
-              return DropdownMenuItem(
-                value: fit,
-                child: Text(fit.displayName),
-              );
-            }).toList(),
+          // Expected Fit SelectionR
+          SizedBox(
+            width: double.infinity, // Makes it take the full screen width
+            child: DropdownButton<Fit>(
+              hint: Text("Select Expected Fit"),
+              value: _expectedFit,
+              onChanged: (newValue) {
+                setState(() {
+                  _expectedFit = newValue;
+                });
+              },
+              items: Fit.values.map((fit) {
+                return DropdownMenuItem(
+                  value: fit,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(fit.displayName)),
+                );
+              }).toList(),
+            ),
           ),
 
 
@@ -137,20 +151,23 @@ class _NewPostState extends State<NewPost> {
 
           
           // Actual Fit Selection
-          DropdownButton<Fit>(
-            hint: Text("Select Actual Fit"),
-            value: _actualFit,
-            onChanged: (newValue) {
-              setState(() {
-                _actualFit = newValue;
-              });
-            },
-            items: Fit.values.map((fit) {
-              return DropdownMenuItem(
-                value: fit,
-                child: Text(fit.displayName),
-              );
-            }).toList(),
+          SizedBox(
+            width: double.infinity, // Makes it take the full screen width
+            child: DropdownButton<Fit>(
+              hint: Text("Select Actual Fit"),
+              value: _actualFit,
+              onChanged: (newValue) {
+                setState(() {
+                  _actualFit = newValue;
+                });
+              },
+              items: Fit.values.map((fit) {
+                return DropdownMenuItem(
+                  value: fit,
+                  child: Text(fit.displayName),
+                );
+              }).toList(),
+            ),
           ),
 
 

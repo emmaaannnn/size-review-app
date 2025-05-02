@@ -32,6 +32,7 @@ class _PostWidgetState extends State<PostWidget> {
             ),
           ),
           
+          // Image that was selected for the post
           Image.asset(
             widget.post.photoUrl,
             width: MediaQuery.of(context).size.width,
@@ -39,6 +40,10 @@ class _PostWidgetState extends State<PostWidget> {
             fit: BoxFit.cover,
           ),
 
+          SizedBox(height: 10),
+
+
+          // Displaying the clothing type and the size
           Row(
             children: [
               Text(
@@ -62,6 +67,7 @@ class _PostWidgetState extends State<PostWidget> {
             ],
           ),
 
+          // Displaying User Height
           Row(
             children: [
               Text(
@@ -71,6 +77,8 @@ class _PostWidgetState extends State<PostWidget> {
               Text('${widget.post.userHeight} cm'),
             ],
           ),
+
+          // Displaying User Body Type
           Row(
             children: [
               Text(
@@ -80,6 +88,8 @@ class _PostWidgetState extends State<PostWidget> {
               Text(widget.post.bodyType.displayName),
             ],
           ),
+
+          // Displaying Expected fit of clothing
           Row(
             children: [
               Text(
@@ -89,6 +99,8 @@ class _PostWidgetState extends State<PostWidget> {
               Text(widget.post.expectedFit.displayName),
             ],
           ),
+
+          // Displaying Actual fit of clothing
           Row(
             children: [
               Text(
@@ -99,6 +111,7 @@ class _PostWidgetState extends State<PostWidget> {
             ],
           ),
 
+          // Displaying the description of the post if the button is pressed
           if (_isExpanded)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -108,6 +121,7 @@ class _PostWidgetState extends State<PostWidget> {
               ),
             ),
 
+          // Button to show or hide the description
            Center(
             child: ElevatedButton(
               onPressed: () {
