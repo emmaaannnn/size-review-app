@@ -99,6 +99,15 @@ class _PostWidgetState extends State<PostWidget> {
             ],
           ),
 
+          if (_isExpanded)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                widget.post.description ?? 'No description available.',
+                style: TextStyle(fontSize: 14.0),
+              ),
+            ),
+
            Center(
             child: ElevatedButton(
               onPressed: () {
@@ -109,15 +118,6 @@ class _PostWidgetState extends State<PostWidget> {
               child: Text(_isExpanded ? 'Hide Details' : 'Show More Details'),
             ),
           ),
-
-          if (_isExpanded)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                widget.post.description ?? 'No description available.',
-                style: TextStyle(fontSize: 14.0),
-              ),
-            ),
         ],
       ),
     );

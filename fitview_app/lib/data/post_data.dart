@@ -14,6 +14,7 @@ List<Post> dummyPosts = [
     expectedFit: Fit.oversized,
     actualFit: Fit.straight,
     createdAt: DateTime.now(),
+    description: 'Loving this oversized jacket!, Its got that crop look too so it fits me well and looks amazing!',
   ),
   Post(
     id: '2',
@@ -27,6 +28,7 @@ List<Post> dummyPosts = [
     expectedFit: Fit.tight,
     actualFit: Fit.regular,
     createdAt: DateTime.now(),
+    description: 'This sweatshirt is perfect for my body type! It fits just right and is super comfy.',
   ),
   Post(
     id: '3',
@@ -40,18 +42,19 @@ List<Post> dummyPosts = [
     expectedFit: Fit.baggyOversized,
     actualFit: Fit.oversized,
     createdAt: DateTime.now(),
+    description: 'These pants are a bit baggy but I love the oversized look!',
   ),
   Post(
     id: '4',
     username: 'TrendyVibes',
     photoUrl: 'lib/data/test4.jpg',
     clothingItems: [
-      ClothingItem(type: ClothingType.jacket, size: ClothingSize.m),
+      ClothingItem(type: ClothingType.tshirt, size: ClothingSize.m),
     ],
     userHeight: 180.0,
     bodyType: BodyType.athletic,
-    expectedFit: Fit.slim,
-    actualFit: Fit.extraTight,
+    expectedFit: Fit.oversized,
+    actualFit: Fit.oversized,
     createdAt: DateTime.now(),
   ),
 ];

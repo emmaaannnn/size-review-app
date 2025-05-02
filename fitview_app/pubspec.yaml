@@ -62,6 +62,7 @@ flutter:
     - lib/data/test2.jpg
     - lib/data/test3.jpg
     - lib/data/test4.jpg
+    - lib/data/test5.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

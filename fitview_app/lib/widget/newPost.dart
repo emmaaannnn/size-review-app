@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:image_picker/image_picker.dart';
 import 'package:fitview_app/model/post_model.dart';
 import 'package:fitview_app/model/user_model.dart';
 
@@ -10,20 +9,13 @@ class NewPost extends StatefulWidget {
 }
 
 class _NewPostState extends State<NewPost> {
-  //vXFile? _selectedImage;
-  //final ImagePicker _picker = ImagePicker();
+  String? _selectedImageUrl;
   String _enteredDescription = "";
   ClothingType? _selectedClothingType;
   ClothingSize? _selectedClothingSize;
   Fit? _expectedFit;
   Fit? _actualFit;
 
-  // Future<void> _pickImage() async {
-  //   final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-  //   setState(() {
-  //     _selectedImage = image;
-  //   });
-  // }
 
   void _handleDescriptionChange(String text) {
     setState(() {
@@ -41,41 +33,65 @@ class _NewPostState extends State<NewPost> {
       child: Column(
         children: [
           // Image Selection Button
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey, width: 2),
+            ),
+            width: MediaQuery.of(context).size.width/2,
+            height: 450/2,
+            alignment: Alignment.center,
+            child: _selectedImageUrl == null
+                ? IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _selectedImageUrl = 'lib/data/test5.jpg'; // Assign default image
+                      });
+                    },
+                    icon: Icon(Icons.add_a_photo, size: 40),
+                  )
+                : Image.asset(
+                      _selectedImageUrl!,
+                      width: MediaQuery.of(context).size.width/2,
+                      height: 450/2,
+                      fit: BoxFit.cover,
+                  ),
+          ),
 
-          // ElevatedButton(
-          //   onPressed: _pickImage,
-          //   child: Text("Select Photo"),
-          // ),
-          // if (_selectedImage != null)
-          //   Image.file(
-          //     File(_selectedImage!.path),
-          //     height: 150,
-          //     width: 150,
-          //     fit: BoxFit.cover,
-          //   ),
+          SizedBox(height: 10),
+
+ 
+
 
           // Description Field
           TextField(
             onChanged: _handleDescriptionChange,
-            maxLength: 100,
-            decoration: InputDecoration(labelText: 'Post Description'),
+            maxLines: 5, // Allows the field to expand up to 5 lines
+            decoration: InputDecoration(
+              labelText: 'Post Description',
+              border: OutlineInputBorder(), // Adds a border around the field
+            ),
           ),
 
+          SizedBox(height: 10),
+
           // Clothing Type Selection
-          DropdownButton<ClothingType>(
-            hint: Text("Select Clothing Type"),
-            value: _selectedClothingType,
-            onChanged: (newValue) {
-              setState(() {
-                _selectedClothingType = newValue;
-              });
-            },
-            items: ClothingType.values.map((type) {
-              return DropdownMenuItem(
-                value: type,
-                child: Text(type.displayName),
-              );
-            }).toList(),
+          SizedBox(
+            width: double.infinity, // Makes it take the full screen width
+            child: DropdownButton<ClothingType>(
+              hint: Text("Select Clothing Type"),
+              value: _selectedClothingType,
+              onChanged: (newValue) {
+                setState(() {
+                  _selectedClothingType = newValue;
+                });
+              },
+              items: ClothingType.values.map((type) {
+                return DropdownMenuItem(
+                  value: type,
+                  child: Text(type.displayName),
+                );
+              }).toList(),
+            ),
           ),
 
           // Clothing Size Selection
@@ -96,6 +112,9 @@ class _NewPostState extends State<NewPost> {
               }).toList(),
             ),
 
+
+          SizedBox(height: 10),
+
           // Expected Fit Selection
           DropdownButton<Fit>(
             hint: Text("Select Expected Fit"),
@@ -113,6 +132,10 @@ class _NewPostState extends State<NewPost> {
             }).toList(),
           ),
 
+
+          SizedBox(height: 10),
+
+          
           // Actual Fit Selection
           DropdownButton<Fit>(
             hint: Text("Select Actual Fit"),
@@ -130,6 +153,10 @@ class _NewPostState extends State<NewPost> {
             }).toList(),
           ),
 
+
+          SizedBox(height: 10),
+
+
           // Submit Button
           ElevatedButton(
             onPressed: () {
@@ -142,7 +169,7 @@ class _NewPostState extends State<NewPost> {
                 Post newPost = Post(
                   id: DateTime.now().toString(),
                   username: "CurrentUser", // You can replace this dynamically
-                  photoUrl: 'lib/data/test3.jpg',
+                  photoUrl: 'lib/data/test5.jpg',
                   clothingItems: [
                     ClothingItem(
                       type: _selectedClothingType!,
