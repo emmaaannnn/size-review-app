@@ -3,10 +3,14 @@ import 'package:fitview_app/model/post_model.dart';
 import 'package:fitview_app/model/user_model.dart';
 
 class NewPost extends StatefulWidget {
-  State<NewPost> createState() {
-    return _NewPostState();
-  }
+  final Function(Post) onPostCreated; // Callback function
+
+  NewPost({required this.onPostCreated}); // Accept callback
+
+  @override
+  State<NewPost> createState() => _NewPostState();
 }
+
 
 class _NewPostState extends State<NewPost> {
   String? _selectedImageUrl;
@@ -177,37 +181,41 @@ class _NewPostState extends State<NewPost> {
           // Submit Button
           ElevatedButton(
             onPressed: () {
-              if (//_selectedImage != null &&
-                  _enteredDescription.isNotEmpty &&
-                  _selectedClothingType != null &&
-                  _selectedClothingSize != null &&
-                  _expectedFit != null &&
-                  _actualFit != null) {
-                Post newPost = Post(
-                  id: DateTime.now().toString(),
-                  username: "CurrentUser", // You can replace this dynamically
-                  photoUrl: 'lib/data/test5.jpg',
-                  clothingItems: [
-                    ClothingItem(
-                      type: _selectedClothingType!,
-                      size: _selectedClothingSize!,
-                    ),
-                  ],
-                  userHeight: 170.0, // Replace with actual user data
-                  bodyType: BodyType.average, // Replace with user data
-                  expectedFit: _expectedFit!,
-                  actualFit: _actualFit!,
-                  createdAt: DateTime.now(),
-                  description: _enteredDescription,
-                );
-
-                print("New post created: ${newPost.description}");
+              if (_selectedImageUrl == null ||
+                  _selectedClothingType == null ||
+                  _selectedClothingSize == null ||
+                  _expectedFit == null ||
+                  _actualFit == null) {
+                print("Please fill out all required fields!");
+                return;
               }
+
+              Post newPost = Post(
+                id: DateTime.now().toString(),
+                username: "CurrentUser",
+                photoUrl: _selectedImageUrl!,
+                clothingItems: [
+                  ClothingItem(
+                    type: _selectedClothingType!,
+                    size: _selectedClothingSize!,
+                  ),
+                ],
+                userHeight: 170.0,
+                bodyType: BodyType.average,
+                expectedFit: _expectedFit!,
+                actualFit: _actualFit!,
+                createdAt: DateTime.now(),
+                description: _enteredDescription.isNotEmpty ? _enteredDescription : null,
+              );
+
+              widget.onPostCreated(newPost); // Pass new post back to ExploreScreen
+              Navigator.pop(context); // Close modal after submission
             },
             child: Text("Create Post"),
-          ),
+          )
         ],
       ),
     );
   }
+
 }
