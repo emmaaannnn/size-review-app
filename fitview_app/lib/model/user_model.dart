@@ -63,22 +63,26 @@ extension FitExtension on Fit {
 
 
 class User {
+  final String email;
   final String username;
   final String name;
   final String bio;
   final double height;
   final BodyType bodyType;
   final Fit preferredFit;
+  final String password;
 
 
   User(
     {
+      required this.email,
       required this.username, 
       required this.name, 
       required this.bio,
       required this.height,
       required this.bodyType,
       required this.preferredFit,
+      required this.password,
       }
   );
 }
