@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fitview_app/model/user_model.dart';
 import 'package:fitview_app/data/user_data.dart';
+import 'package:fitview_app/screens/mainScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -12,22 +13,30 @@ class _LoginPageState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _login() {
-  String username = _usernameController.text;
-  String password = _passwordController.text;
+    String username = _usernameController.text;
+    String password = _passwordController.text;
 
-  // Find the matching user in the list
-  User? user = dummyUsers.cast<User?>().firstWhere(
-    (user) => user?.username == username && user?.password == password,
-    orElse: () => null, // Return null if no matching user is found
-  );
+    try {
+      User user = dummyUsers.firstWhere(
+        (user) => user.username == username && user.password == password,
+      );
 
-  if (user != null) {
-    print('Login Successful! Welcome, ${user.name}');
-    Navigator.pushReplacementNamed(context, '/main');
-  } else {
-    print('Invalid Username or Password');
+      print('Login Successful! Welcome, ${user.name}');
+
+      // Navigate to MainScreen, passing the current user
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MainScreen(currentUser: user),
+        ),
+      );
+    } catch (e) {
+      print('Invalid Username or Password');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Invalid Username or Password')),
+      );
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {

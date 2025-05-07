@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fitview_app/screens/mainScreen.dart'; // Import the MainScreen
 import 'package:fitview_app/screens/login_screen.dart'; // Import the LoginScreen
-
+import 'package:fitview_app/model/user_model.dart';
 void main() {
   runApp(MyApp());
 }
@@ -11,7 +11,7 @@ void main() {
 //   Widget build(BuildContext context) {
 //     return MaterialApp(
 //       debugShowCheckedModeBanner: false, // Hides the debug banner
-//       title: 'Flutter App',
+//       title: 'Fitview App',
 //       theme: ThemeData(
 //         primarySwatch: Colors.blue,
 //       ),
@@ -25,15 +25,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter App',
+      title: 'Fitview App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       initialRoute: '/',
-      routes: {
-        '/': (context) => LoginScreen(),
-        '/main': (context) => MainScreen(),
+      onGenerateRoute: (settings) {
+        if (settings.name == '/main') {
+          final User currentUser = settings.arguments as User;
+          return MaterialPageRoute(
+            builder: (context) => MainScreen(currentUser: currentUser),
+          );
+        }
+        return MaterialPageRoute(builder: (context) => LoginScreen());
       },
+
     );
   }
 }
