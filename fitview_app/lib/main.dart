@@ -6,34 +6,34 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false, // Hides the debug banner
-      title: 'Flutter App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MainScreen(), // Set MainScreen as the home widget
-    );
-  }
-}
-
 // class MyApp extends StatelessWidget {
-//  @override
+//   @override
 //   Widget build(BuildContext context) {
 //     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
+//       debugShowCheckedModeBanner: false, // Hides the debug banner
 //       title: 'Flutter App',
 //       theme: ThemeData(
 //         primarySwatch: Colors.blue,
 //       ),
-//       initialRoute: '/',
-//       routes: {
-//         '/': (context) => LoginScreen(),
-//         '/main': (context) => MainScreen(),
-//       },
+//       home: MainScreen(), // Set MainScreen as the home widget
 //     );
 //   }
 // }
+
+class MyApp extends StatelessWidget {
+ @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginScreen(),
+        '/main': (context) => MainScreen(),
+      },
+    );
+  }
+}

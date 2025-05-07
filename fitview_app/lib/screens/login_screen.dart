@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fitview_app/model/user_model.dart';
+import 'package:fitview_app/data/user_data.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -10,11 +12,22 @@ class _LoginPageState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _login() {
-    String username = _usernameController.text;
-    String password = _passwordController.text;
-    // Perform login logic here
-    print('Email: $username, Password: $password');
+  String username = _usernameController.text;
+  String password = _passwordController.text;
+
+  // Find the matching user in the list
+  User? user = dummyUsers.cast<User?>().firstWhere(
+    (user) => user?.username == username && user?.password == password,
+    orElse: () => null, // Return null if no matching user is found
+  );
+
+  if (user != null) {
+    print('Login Successful! Welcome, ${user.name}');
+    Navigator.pushReplacementNamed(context, '/main');
+  } else {
+    print('Invalid Username or Password');
   }
+}
 
   @override
   Widget build(BuildContext context) {
