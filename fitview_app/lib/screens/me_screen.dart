@@ -1,6 +1,7 @@
 import 'package:fitview_app/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fitview_app/widget/newPost.dart';
+import 'package:fitview_app/widget/userWidget.dart';
 
 class MeScreen extends StatefulWidget {
   final User currentUser;
@@ -40,7 +41,9 @@ class _Me extends State<MeScreen> {
           ),
         ],
       ),
-      //return 
+      body: Center( // Add UserWidget to display user info
+        child: UserWidget(currentUser: widget.currentUser),
+      ), 
     );
   }
 }

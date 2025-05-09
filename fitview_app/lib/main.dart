@@ -1,7 +1,6 @@
-import 'package:fitview_app/screens/explore_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fitview_app/screens/mainScreen.dart'; // Import the MainScreen
-import 'package:fitview_app/screens/login_screen.dart'; // Import the LoginScreen
+//import 'package:fitview_app/screens/login_screen.dart'; // Import the LoginScreen
 import 'package:fitview_app/model/user_model.dart';
 import 'package:fitview_app/data/user_data.dart';
 import 'package:provider/provider.dart';

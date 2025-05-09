@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fitview_app/model/post_model.dart';
 import 'package:fitview_app/model/user_model.dart';
-import 'package:fitview_app/data/user_data.dart';
 import 'package:fitview_app/states/postState.dart';
 
 class NewPost extends StatefulWidget {
-
   @override
   State<NewPost> createState() => _NewPostState();
 }
@@ -20,9 +18,7 @@ class _NewPostState extends State<NewPost> {
   Fit? _expectedFit;
   Fit? _actualFit;
 
-  late User testUser;
 
-  @override
   void _handleDescriptionChange(String text) {
     setState(() {
       _enteredDescription = text;
@@ -30,15 +26,7 @@ class _NewPostState extends State<NewPost> {
   }
 
 
-  void initState() {
-    super.initState();
-    testUser = dummyUsers.firstWhere(
-      (user) => user.username == "TestUser",
-      orElse: () => dummyUsers[0], // Fallback in case TestUser isn't found
-    );
-  }
-
-
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(
@@ -231,4 +219,5 @@ class _NewPostState extends State<NewPost> {
       ),
     );
   }
+
 }

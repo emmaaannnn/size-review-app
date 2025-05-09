@@ -24,7 +24,7 @@ class _Explore extends State<ExploreScreen> {
       context: context, 
       isScrollControlled: true,
       builder: (modalContext) {
-        return Container(
+        return SizedBox(
           height: MediaQuery.of(context).size.height * 0.8, // Fixed height: 80% of screen
           child: NewPost(),
         );

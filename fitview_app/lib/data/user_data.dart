@@ -45,7 +45,7 @@ List<User> dummyUsers = [
     email: 'test@email.com',
     username: 'TestUser',
     password: 'password123',
-    name: 'Test User',
+    name: 'John Doe',
     bio: 'This is a test user.',
     height: 170.0,
     bodyType: BodyType.athletic,
