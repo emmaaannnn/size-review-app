@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:fitview_app/widget/postWidget.dart';
 import 'package:fitview_app/data/post_data.dart';
 import 'package:fitview_app/widget/newPost.dart';
 import 'package:fitview_app/widget/searchDelegate.dart';
 import 'package:fitview_app/model/post_model.dart';
+import 'package:fitview_app/states/postState.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
@@ -17,13 +19,6 @@ class ExploreScreen extends StatefulWidget {
 class _Explore extends State<ExploreScreen> {
   List<Post> posts = List.from(dummyPosts); // Mutable List
 
-  void _addNewPost(Post newPost) {
-    setState(() {
-      posts.insert(0, newPost); // Inserts new post at the top
-    });
-  }
-
-
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
       context: context, 
@@ -31,7 +26,7 @@ class _Explore extends State<ExploreScreen> {
       builder: (modalContext) {
         return Container(
           height: MediaQuery.of(context).size.height * 0.8, // Fixed height: 80% of screen
-          child: NewPost(onPostCreated: _addNewPost),
+          child: NewPost(),
         );
       },
     );
@@ -60,10 +55,14 @@ class _Explore extends State<ExploreScreen> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: dummyPosts.length,
-        itemBuilder: (context, index) {
-          return PostWidget(post: posts[index]);
+      body: Consumer<PostState>(
+        builder: (context, postState, child) {
+          return ListView.builder(
+            itemCount: postState.posts.length,
+            itemBuilder: (context, index) {
+              return PostWidget(post: postState.posts.reversed.toList()[index]);
+            },
+          );
         },
       ),
     );
