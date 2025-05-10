@@ -11,7 +11,6 @@ class PostState extends ChangeNotifier {
   // Adding Post
   void addPost(Post post) {
     _posts.add(post);
-    print("Total Posts: ${_posts.length}");
     notifyListeners(); // Notify listeners about the change
   }
 
