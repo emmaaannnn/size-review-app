@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:fitview_app/model/user_model.dart';
+import 'package:fitview_app/data/user_data.dart';
 
 class UserState extends ChangeNotifier {
-  final List<User> _users = [];
+  final List<User> _users = List.from(dummyUsers);
   User? _currentUser;
 
   // Getting registered Users
@@ -11,10 +12,14 @@ class UserState extends ChangeNotifier {
   // Get current user
   User? get currentUser => _currentUser;
 
-  // Adding Users
+  // Adding Users (Prevent Duplicates)
   void addUser(User user) {
-    _users.add(user);
-    notifyListeners();
+    if (!_users.any((existingUser) => existingUser.username == user.username)) {
+      _users.add(user);
+      notifyListeners();
+    } else {
+      print("User already exists!");
+    }
   }
 
   // Removing Users

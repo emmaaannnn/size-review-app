@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fitview_app/model/user_model.dart';
-import 'package:fitview_app/data/user_data.dart';
-import 'package:fitview_app/screens/mainScreen.dart';
+import 'package:provider/provider.dart';
+import 'package:fitview_app/states/userState.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -13,30 +13,38 @@ class _LoginPageState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _login() {
-    String username = _usernameController.text;
-    String password = _passwordController.text;
+  String username = _usernameController.text.trim();
+  String password = _passwordController.text.trim();
 
-    try {
-      User user = dummyUsers.firstWhere(
-        (user) => user.username == username && user.password == password,
-      );
+  // Retrieve users from UserState instead of dummyUsers
+  UserState userState = Provider.of<UserState>(context, listen: false);
 
-      print('Login Successful! Welcome, ${user.name}');
+  User? user;
 
-      // Navigate to MainScreen, passing the current user
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MainScreen(currentUser: user),
-        ),
-      );
-    } catch (e) {
-      print('Invalid Username or Password');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Invalid Username or Password')),
-      );
-    }
+  try {
+    user = userState.users.firstWhere(
+      (user) => user.username == username && user.password == password,
+    );
+  } catch (e) {
+    user = null; // No match found
   }
+
+  if (user != null) {
+    print('Login Successful! Welcome, ${user.name}');
+
+    // Set logged-in user in UserState
+    userState.setUser(user);
+
+    // Navigate to MainScreen without manually passing currentUser
+    Navigator.pushReplacementNamed(context, '/main');
+  } else {
+    // Show error message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Invalid Username or Password')),
+    );
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {

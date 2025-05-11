@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:fitview_app/model/post_model.dart';
 import 'package:fitview_app/model/user_model.dart';
 import 'package:fitview_app/states/postState.dart';
+import 'package:fitview_app/states/userState.dart';
 
 class NewPost extends StatefulWidget {
   @override
@@ -28,6 +29,10 @@ class _NewPostState extends State<NewPost> {
 
   @override
   Widget build(BuildContext context) {
+    // Retrieve logged-in user from UserState
+    UserState userState = Provider.of<UserState>(context);
+    User? currentUser = userState.currentUser;
+
     return Padding(
       padding: EdgeInsets.all(
         20,
@@ -60,9 +65,6 @@ class _NewPostState extends State<NewPost> {
           ),
 
           SizedBox(height: 10),
-
- 
-
 
           // Description Field
           TextField(
@@ -192,7 +194,7 @@ class _NewPostState extends State<NewPost> {
 
               Post newPost = Post(
                 id: DateTime.now().toString(),
-                username: "TestUser",
+                username: currentUser!.username,
                 photoUrl: _selectedImageUrl!,
                 clothingItems: [
                   ClothingItem(
@@ -200,8 +202,8 @@ class _NewPostState extends State<NewPost> {
                     size: _selectedClothingSize!,
                   ),
                 ],
-                userHeight: 170.0,
-                bodyType: BodyType.average,
+                userHeight: currentUser.height,
+                bodyType: currentUser.bodyType,
                 expectedFit: _expectedFit!,
                 actualFit: _actualFit!,
                 createdAt: DateTime.now(),
