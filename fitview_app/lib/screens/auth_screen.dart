@@ -3,14 +3,17 @@ import 'package:fitview_app/model/user_model.dart';
 import 'package:provider/provider.dart';
 import 'package:fitview_app/states/userState.dart';
 
-class LoginScreen extends StatefulWidget {
+class AuthScreen extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _AuthScreenState createState() => _AuthScreenState();
 }
 
-class _LoginPageState extends State<LoginScreen> {
+class _AuthScreenState extends State<AuthScreen> {
+  bool _isLogin = true;
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
   void _login() {
   String username = _usernameController.text.trim();
@@ -49,11 +52,16 @@ class _LoginPageState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
+      appBar: AppBar(title: Text(_isLogin ? 'Login' : 'Register')),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
+            if (!_isLogin)
+              TextField(
+                controller: _emailController,
+                decoration: InputDecoration(labelText: 'Email'),
+              ),
             TextField(
               controller: _usernameController,
               decoration: InputDecoration(labelText: 'Username'),
@@ -63,10 +71,24 @@ class _LoginPageState extends State<LoginScreen> {
               decoration: InputDecoration(labelText: 'Password'),
               obscureText: true,
             ),
+            if (!_isLogin)
+              TextField(
+                controller: _confirmPasswordController,
+                decoration: InputDecoration(labelText: 'Confirm Password'),
+                obscureText: true,
+              ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: _login,
-              child: Text('Login'),
+              child: Text(_isLogin ? 'Login' : 'Register'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  _isLogin = !_isLogin;
+                });
+              },
+              child: Text(_isLogin ? "Don't have an account? Register" : "Already have an account? Login"),
             ),
           ],
         ),

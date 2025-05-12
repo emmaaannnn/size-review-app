@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fitview_app/screens/mainScreen.dart'; // Import the MainScreen
-import 'package:fitview_app/screens/login_screen.dart'; // Import the LoginScreen
+import 'package:fitview_app/screens/auth_screen.dart'; // Import the LoginScreen
 import 'package:provider/provider.dart';
 import 'package:fitview_app/states/postState.dart';
 import 'package:fitview_app/states/userState.dart';
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Fitview App',
           theme: ThemeData(primarySwatch: Colors.blue),
-          home: userState.currentUser != null ? MainScreen(currentUser: userState.currentUser!) : LoginScreen(), // Check login state
+          home: userState.currentUser != null ? MainScreen(currentUser: userState.currentUser!) : AuthScreen(), // Check login state
         );
       },
     );
