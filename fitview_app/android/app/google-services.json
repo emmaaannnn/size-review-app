@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1080165528930",
+    "project_id": "fitview-app-11a0e",
+    "storage_bucket": "fitview-app-11a0e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080165528930:android:b11999a1c166bf2843283b",
+        "android_client_info": {
+          "package_name": "com.example.fitview_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtxBcMJa9PCGiiEqFMOvUii8EjbWJ-P_U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
