@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fitview_app/model/post_model.dart';
 import 'package:fitview_app/model/user_model.dart';
-import 'package:fitview_app/states/postState.dart';
-import 'package:fitview_app/states/userState.dart';
+import 'package:fitview_app/model/postState.dart';
+import 'package:fitview_app/model/userState.dart';
 
 class NewPost extends StatefulWidget {
   @override

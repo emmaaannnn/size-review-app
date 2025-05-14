@@ -5,7 +5,7 @@ import 'package:fitview_app/data/post_data.dart';
 import 'package:fitview_app/widget/newPost.dart';
 import 'package:fitview_app/widget/searchDelegate.dart';
 import 'package:fitview_app/model/post_model.dart';
-import 'package:fitview_app/states/postState.dart';
+import 'package:fitview_app/model/postState.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});

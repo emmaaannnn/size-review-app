@@ -4,7 +4,7 @@ import 'following_screen.dart';
 import 'me_screen.dart';
 import '../widget/bottomNavBar.dart'; // Import your BottomNavBar widget
 import '../model/user_model.dart';
-import '../states/userState.dart';
+import '../model/userState.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -17,6 +17,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  
   int _currentIndex = 0;
 
   late List<Widget> _pages;

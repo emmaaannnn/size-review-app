@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fitview_app/model/user_model.dart';
 import 'package:provider/provider.dart';
-import 'package:fitview_app/states/userState.dart';
+import 'package:fitview_app/model/userState.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -57,15 +57,15 @@ class _AuthScreenState extends State<AuthScreen> {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
-            if (!_isLogin)
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(labelText: 'Email'),
               ),
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
-            ),
+            if (!_isLogin)
+              TextField(
+                controller: _usernameController,
+                decoration: InputDecoration(labelText: 'Username'),
+              ),
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(labelText: 'Password'),
