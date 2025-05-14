@@ -70,7 +70,6 @@ class User {
   final double height;
   final BodyType bodyType;
   final Fit preferredFit;
-  final String password;
 
 
   User(
@@ -82,7 +81,6 @@ class User {
       required this.height,
       required this.bodyType,
       required this.preferredFit,
-      required this.password,
       }
   );
 }

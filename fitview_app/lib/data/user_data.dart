@@ -4,7 +4,6 @@ List<User> dummyUsers = [
   User(
     email: 'fashiong@gmail.com',
     username: 'FashionGuru',
-    password: 'password123',
     name: 'John Guru',
     bio: 'Fashion enthusiast and style advisor.',
     height: 165.0,
@@ -14,7 +13,6 @@ List<User> dummyUsers = [
   User(
     email: 'stylestar101@yahoo.com',
     username: 'StyleStar',
-    password: 'password123',
     name: 'Ricky Styler',
     bio: 'Always on the lookout for the latest trends.',
     height: 155.0,
@@ -24,7 +22,6 @@ List<User> dummyUsers = [
   User(
     email: 'chicfashion@gmail.com',
     username: 'ChicFashionista',
-    password: 'password123',
     name: 'Beth Chic',
     bio: 'Chic and trendy, always!',
     height: 170.0,
@@ -34,7 +31,6 @@ List<User> dummyUsers = [
   User(
     email: 'trendyguy@hotmail.com',
     username: 'TrendyVibes',
-    password: 'password123',
     name: 'Bob Trendy',
     bio: 'Trendy and stylish, always!',
     height: 180.0,
@@ -42,13 +38,13 @@ List<User> dummyUsers = [
     preferredFit: Fit.oversized,
   ),
   User(
-    email: 'test@email.com',
+    email: 'test@test.com',
     username: 'TestUser',
-    password: 'password123',
     name: 'John Doe',
     bio: 'This is a test user.',
     height: 170.0,
     bodyType: BodyType.athletic,
     preferredFit: Fit.regular,
+    //password: password123 - keep this user in firebase authentication
   ),
 ];

@@ -2,6 +2,7 @@ import 'package:fitview_app/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fitview_app/widget/newPost.dart';
 import 'package:fitview_app/widget/userWidget.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth; // Import FirebaseAuth
 
 class MeScreen extends StatefulWidget {
   final User currentUser;
@@ -15,7 +16,6 @@ class MeScreen extends StatefulWidget {
 }
 
 class _Me extends State<MeScreen> {
-
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
       context: context, 
@@ -27,6 +27,12 @@ class _Me extends State<MeScreen> {
         );
       },
     );
+  }
+
+  // ✅ Logout function
+  void _logout() async {
+    await auth.FirebaseAuth.instance.signOut(); // Sign out user
+    Navigator.pushReplacementNamed(context, '/auth'); // Redirect to AuthScreen
   }
 
   @override
@@ -41,8 +47,20 @@ class _Me extends State<MeScreen> {
           ),
         ],
       ),
-      body: Center( // Add UserWidget to display user info
-        child: UserWidget(currentUser: widget.currentUser),
+      
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          UserWidget(currentUser: widget.currentUser), // Display user info
+          
+          SizedBox(height: 20),
+
+          // ✅ Logout Button
+          ElevatedButton(
+            onPressed: _logout,
+            child: Text("Log Out"),
+          ),
+        ],
       ), 
     );
   }
