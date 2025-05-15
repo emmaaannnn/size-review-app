@@ -1,4 +1,5 @@
 import 'user_model.dart';
+import 'dart:io';
 
 enum ClothingType {
   tshirt,
@@ -101,7 +102,7 @@ class ClothingItem {
 class Post {
   final String id; // Unique ID for the post
   final String username;
-  final String photoUrl; 
+  final String photoUrl;
   final List<ClothingItem> clothingItems;
   final double userHeight; 
   final BodyType bodyType; 
@@ -122,6 +123,11 @@ class Post {
     required this.createdAt,
     this.description,
   });
+
+  // Convert the stored string path into a File when needed
+  File getPhotoFile() {
+    return File(photoUrl); // Turns the string into a usable File
+  }
 
 }
 

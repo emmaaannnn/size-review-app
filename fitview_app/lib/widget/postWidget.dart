@@ -1,6 +1,7 @@
 import 'package:fitview_app/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fitview_app/model/post_model.dart';
+import 'dart:io';
 
 class PostWidget extends StatefulWidget {
   final Post post;
@@ -33,12 +34,13 @@ class _PostWidgetState extends State<PostWidget> {
           ),
           
           // Image that was selected for the post
-          Image.asset(
-            widget.post.photoUrl,
+          Image.file(
+            File(widget.post.photoUrl), // Converts the string file path into a File object
             width: MediaQuery.of(context).size.width,
             height: 450.0,
             fit: BoxFit.cover,
           ),
+
 
           SizedBox(height: 10),
 

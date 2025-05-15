@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+
 import 'package:fitview_app/model/post_model.dart';
 import 'package:fitview_app/model/user_model.dart';
+
 import 'package:fitview_app/model/postState.dart';
 import 'package:fitview_app/model/userState.dart';
 
@@ -12,12 +16,13 @@ class NewPost extends StatefulWidget {
 
 
 class _NewPostState extends State<NewPost> {
-  String? _selectedImageUrl;
   String _enteredDescription = "";
   ClothingType? _selectedClothingType;
   ClothingSize? _selectedClothingSize;
   Fit? _expectedFit;
   Fit? _actualFit;
+  final ImagePicker _picker = ImagePicker();
+  File? _selectedImage;
 
 
   void _handleDescriptionChange(String text) {
@@ -25,6 +30,24 @@ class _NewPostState extends State<NewPost> {
       _enteredDescription = text;
     });
   }
+
+  Future<void> pickImage() async {
+  final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+  if (image == null) {
+    return; // User canceled selection, do nothing.
+  }
+  
+  if (!await File(image.path).exists()) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Failed to load selected image.")),
+    );
+    return;
+  }
+
+  setState(() {
+    _selectedImage = File(image.path);
+  });
+}
 
 
   @override
@@ -47,20 +70,16 @@ class _NewPostState extends State<NewPost> {
             width: MediaQuery.of(context).size.width/2,
             height: 450/2,
             alignment: Alignment.center,
-            child: _selectedImageUrl == null
+            child: _selectedImage == null
                 ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _selectedImageUrl = 'lib/data/test5.jpg'; // Assign default image
-                      });
-                    },
+                    onPressed: pickImage, // Calls function to open gallery
                     icon: Icon(Icons.add_a_photo, size: 40),
                   )
-                : Image.asset(
-                      _selectedImageUrl!,
-                      width: MediaQuery.of(context).size.width/2,
-                      height: 450/2,
-                      fit: BoxFit.cover,
+                : Image.file(
+                    _selectedImage!,
+                    width: MediaQuery.of(context).size.width / 2,
+                    height: 450 / 2,
+                    fit: BoxFit.cover,
                   ),
           ),
 
@@ -181,7 +200,7 @@ class _NewPostState extends State<NewPost> {
           // Submit Button
           ElevatedButton(
             onPressed: () {
-              if (_selectedImageUrl == null ||
+              if (_selectedImage == null ||
                   _selectedClothingType == null ||
                   _selectedClothingSize == null ||
                   _expectedFit == null ||
@@ -195,7 +214,7 @@ class _NewPostState extends State<NewPost> {
               Post newPost = Post(
                 id: DateTime.now().toString(),
                 username: currentUser!.username,
-                photoUrl: _selectedImageUrl!,
+                photoUrl: _selectedImage!.path,
                 clothingItems: [
                   ClothingItem(
                     type: _selectedClothingType!,

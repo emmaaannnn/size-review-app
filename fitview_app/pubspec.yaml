@@ -37,6 +37,7 @@ dependencies:
   provider: ^6.1.5
   firebase_auth: ^5.5.3
   firebase_core: ^3.13.0
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +67,7 @@ flutter:
     - lib/data/test3.jpg
     - lib/data/test4.jpg
     - lib/data/test5.jpg
+    - lib/data/fitview_icon.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
