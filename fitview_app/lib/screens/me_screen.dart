@@ -49,16 +49,20 @@ class _Me extends State<MeScreen> {
       ),
       
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          UserWidget(currentUser: widget.currentUser), // Display user info
-          
+          // UserWidget at the top
+          UserWidget(currentUser: widget.currentUser), 
+
           SizedBox(height: 20),
 
-          // ✅ Logout Button
-          ElevatedButton(
-            onPressed: _logout,
-            child: Text("Log Out"),
+          // Expanding the remaining space to center the button
+          Expanded(
+            child: Center(
+              child: ElevatedButton(
+                onPressed: _logout,
+                child: Text("Log Out"),
+              ),
+            ),
           ),
         ],
       ), 
