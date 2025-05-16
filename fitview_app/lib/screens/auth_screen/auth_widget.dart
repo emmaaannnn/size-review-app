@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:fitview_app/data/user_data.dart'; // Import your dummy user data
+
 import 'package:fitview_app/model/userState.dart';
 import 'package:fitview_app/model/user_model.dart';
 
@@ -18,24 +20,14 @@ class AuthWidget {
       if (firebaseUser != null) {
         print('Login Successful! Welcome, ${firebaseUser.email}');
 
-        // Find matching user from dummyUsers based on email
-        User? matchingUser = dummyUsers.firstWhere(
-          (user) => user.email == firebaseUser.email,
-          orElse: () => User( // If user not found, create default profile
-            email: firebaseUser.email!,
-            username: firebaseUser.email!.split('@')[0],
-            name: "New User",
-            bio: "Welcome to FitView!",
-            height: 170.0,
-            bodyType: BodyType.average,
-            preferredFit: Fit.regular,
-          ),
-        );
+        UserState userState = Provider.of<UserState>(context, listen: false);
+        await userState.fetchCurrentUser(); // Fetch user from Firestore
 
-        // Store user in UserState
-        Provider.of<UserState>(context, listen: false).setUser(matchingUser);
+        if (userState.currentUser == null) {
+          print("No matching user found in Firestore!");
+        }
 
-        Navigator.pushReplacementNamed(context, '/main');
+        Navigator.pushReplacementNamed(context, '/main'); // Navigate after login
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -53,7 +45,6 @@ class AuthWidget {
     }
 
     try {
-      // Create user in Firebase Authentication
       auth.UserCredential userCredential = await auth.FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -64,25 +55,32 @@ class AuthWidget {
       if (firebaseUser != null) {
         print('Registration Successful! Welcome, ${firebaseUser.email}');
 
-        // Create default user profile
-      User newUser = User(
-        email: firebaseUser.email!,
-        username: username.isNotEmpty ? username : firebaseUser.email!.split('@')[0],
-        name: "New User",
-        bio: "Welcome to FitView!",
-        height: 170.0,
-        bodyType: BodyType.average,
-        preferredFit: Fit.regular,
-      );
+        // Create new user profile
+        User newUser = User(
+          email: firebaseUser.email!,
+          username: username.isNotEmpty ? username : firebaseUser.email!.split('@')[0],
+          name: "New User",
+          bio: "Welcome to FitView!",
+          height: 170.0,
+          bodyType: BodyType.average,
+          preferredFit: Fit.regular,
+        );
 
-      // Add new user to dummyUsers list
-      dummyUsers.add(newUser);
+        // Store user in Firestore instead of dummyUsers
+        await FirebaseFirestore.instance.collection('users').doc(newUser.email).set({
+          'email': newUser.email,
+          'username': newUser.username,
+          'name': newUser.name,
+          'bio': newUser.bio,
+          'height': newUser.height,
+          'bodyType': newUser.bodyType.toString(),
+          'preferredFit': newUser.preferredFit.toString(),
+        });
 
-      // Store user in UserState
-      Provider.of<UserState>(context, listen: false).setUser(newUser);
+        // Update UserState
+        Provider.of<UserState>(context, listen: false).setUser(newUser);
 
-      Navigator.pushReplacementNamed(context, '/main');
-
+        Navigator.pushReplacementNamed(context, '/main'); // Navigate after registration
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

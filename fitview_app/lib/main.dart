@@ -18,7 +18,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  
   FirebaseFirestore.instance.settings = Settings(persistenceEnabled: true); // Optional offline mode
 
   runApp(

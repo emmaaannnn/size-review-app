@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:fitview_app/widget/newPost.dart';
 import 'package:fitview_app/widget/userWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth; // Import FirebaseAuth
-import 'package:fitview_app/data/user_data.dart';
 
 class MeScreen extends StatefulWidget {
   final User currentUser;
@@ -30,7 +29,7 @@ class _Me extends State<MeScreen> {
     );
   }
 
-  // ✅ Logout function
+  // Logout function
   void _logout() async {
     await auth.FirebaseAuth.instance.signOut(); // Sign out user
     Navigator.pushReplacementNamed(context, '/auth'); // Redirect to AuthScreen
@@ -67,10 +66,6 @@ class _Me extends State<MeScreen> {
                     child: Text("Log Out"),
                   ),
                   SizedBox(height: 10), // Adds spacing between buttons
-                  ElevatedButton(
-                    onPressed: addDummyUsersToFirestore,
-                    child: Text("Upload Dummy Users"),
-                  ),
                 ],
               ),
             ),

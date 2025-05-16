@@ -8,8 +8,6 @@ import '../widget/bottomNavBar.dart'; // Import your BottomNavBar widget
 import '../model/user_model.dart';
 import '../model/userState.dart';
 
-import '../data/user_data.dart'; // Import your dummy user data
-
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 
@@ -26,6 +24,7 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
       super.initState();
       _pages = []; // Initialize empty, we will populate it dynamically later
+      Future.microtask(() => Provider.of<UserState>(context, listen: false).fetchCurrentUser());
     }
 
   void _onTabTapped(int index) {
@@ -40,6 +39,14 @@ class _MainScreenState extends State<MainScreen> {
     UserState userState = Provider.of<UserState>(context);
     User? currentUser = userState.currentUser; // Get app user from UserState
 
+    if (currentUser == null) {
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(), // Show loading while fetching user
+        ),
+      );
+    }
+
     if (firebaseUser == null) {
       return Scaffold(
         body: Center(child: Text("No user logged in!")),
@@ -47,28 +54,16 @@ class _MainScreenState extends State<MainScreen> {
     }
 
     // Find the matching user from dummyUsers
-    currentUser ??= dummyUsers.firstWhere(
-      (user) => user.email == firebaseUser.email,
-      orElse: () => User(
-        email: firebaseUser.email!,
-        username: firebaseUser.email!.split('@')[0],
-        name: "New User",
-        bio: "NEW USER DID NOT LOAD",
-        height: 170.0,
-        bodyType: BodyType.average,
-        preferredFit: Fit.regular,
-      ),
-    );
+    currentUser = userState.currentUser;
 
     // Store user in `UserState` for easy access later
-    userState.setUser(currentUser);
-
+    // userState.setUser(currentUser);
 
     // Initialize screens after retrieving the logged-in user
     _pages = [
       ExploreScreen(),
       FollowingScreen(),
-      MeScreen(currentUser: currentUser),
+      //MeScreen(currentUser),
     ];
 
     return Scaffold(
