@@ -108,7 +108,6 @@ class Post {
   final BodyType bodyType; 
   final Fit expectedFit;
   final Fit actualFit; 
-  final DateTime createdAt; // Timestamp of post creation
   final String ? description; // Optional description of the post
 
   Post({
@@ -120,7 +119,6 @@ class Post {
     required this.bodyType,
     required this.expectedFit,
     required this.actualFit,
-    required this.createdAt,
     this.description,
   });
 

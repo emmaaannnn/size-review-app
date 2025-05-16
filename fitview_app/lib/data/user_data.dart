@@ -1,4 +1,5 @@
 import 'package:fitview_app/model/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 List<User> dummyUsers = [
   User(
@@ -48,3 +49,19 @@ List<User> dummyUsers = [
     //password: password123 - keep this user in firebase authentication
   ),
 ];
+
+//adding users to firestore
+Future<void> addDummyUsersToFirestore() async {
+  for (User user in dummyUsers) {
+    await FirebaseFirestore.instance.collection('users').doc(user.username).set({
+      'email': user.email,
+      'username': user.username,
+      'name': user.name,
+      'bio': user.bio,
+      'height': user.height,
+      'bodyType': user.bodyType.toString(),
+      'preferredFit': user.preferredFit.toString(),
+    });
+  }
+  print("Dummy users added successfully!");
+}

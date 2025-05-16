@@ -13,7 +13,6 @@ List<Post> dummyPosts = [
     bodyType: BodyType.slim,
     expectedFit: Fit.oversized,
     actualFit: Fit.straight,
-    createdAt: DateTime.now(),
     description: 'Loving this oversized jacket!, Its got that crop look too so it fits me well and looks amazing!',
   ),
   Post(
@@ -27,7 +26,6 @@ List<Post> dummyPosts = [
     bodyType: BodyType.athletic,
     expectedFit: Fit.tight,
     actualFit: Fit.regular,
-    createdAt: DateTime.now(),
     description: 'This sweatshirt is perfect for my body type! It fits just right and is super comfy.',
   ),
   Post(
@@ -41,7 +39,6 @@ List<Post> dummyPosts = [
     bodyType: BodyType.curvy,
     expectedFit: Fit.baggyOversized,
     actualFit: Fit.oversized,
-    createdAt: DateTime.now(),
     description: 'These pants are a bit baggy but I love the oversized look!',
   ),
   Post(
@@ -55,6 +52,5 @@ List<Post> dummyPosts = [
     bodyType: BodyType.athletic,
     expectedFit: Fit.oversized,
     actualFit: Fit.oversized,
-    createdAt: DateTime.now(),
   ),
 ];

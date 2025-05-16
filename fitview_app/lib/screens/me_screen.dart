@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fitview_app/widget/newPost.dart';
 import 'package:fitview_app/widget/userWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth; // Import FirebaseAuth
+import 'package:fitview_app/data/user_data.dart';
 
 class MeScreen extends StatefulWidget {
   final User currentUser;
@@ -58,9 +59,19 @@ class _Me extends State<MeScreen> {
           // Expanding the remaining space to center the button
           Expanded(
             child: Center(
-              child: ElevatedButton(
-                onPressed: _logout,
-                child: Text("Log Out"),
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // Keeps buttons centered
+                children: [
+                  ElevatedButton(
+                    onPressed: _logout,
+                    child: Text("Log Out"),
+                  ),
+                  SizedBox(height: 10), // Adds spacing between buttons
+                  ElevatedButton(
+                    onPressed: addDummyUsersToFirestore,
+                    child: Text("Upload Dummy Users"),
+                  ),
+                ],
               ),
             ),
           ),

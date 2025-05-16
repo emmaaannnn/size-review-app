@@ -225,7 +225,6 @@ class _NewPostState extends State<NewPost> {
                 bodyType: currentUser.bodyType,
                 expectedFit: _expectedFit!,
                 actualFit: _actualFit!,
-                createdAt: DateTime.now(),
                 description: _enteredDescription.isNotEmpty ? _enteredDescription : null,
               );
 
