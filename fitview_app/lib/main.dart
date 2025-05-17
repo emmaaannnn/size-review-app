@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:fitview_app/screens/mainScreen.dart'; // Import the MainScreen
 import 'package:fitview_app/screens/auth_screen/auth_screen.dart'; // Import the LoginScreen
+import 'package:fitview_app/screens/auth_screen/auth_screen_new.dart'; // Import the ProfileSetupScreen
 
 import 'package:provider/provider.dart';
 import 'package:fitview_app/model/postState.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
           routes: {
             '/main': (context) => MainScreen(),
             '/auth': (context) => AuthScreen(),
+            '/profileSetup': (context) => ProfileSetupScreen(),
           },
         );
       },

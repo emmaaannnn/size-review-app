@@ -39,6 +39,14 @@ class _MainScreenState extends State<MainScreen> {
     UserState userState = Provider.of<UserState>(context);
     User? currentUser = userState.currentUser; // Get app user from UserState
 
+
+    if (firebaseUser == null) {
+      return Scaffold(
+        body: Center(child: Text("No user logged in!")),
+      );
+    }
+
+    // Show loading screen while Firestore data is being fetched
     if (currentUser == null) {
       return Scaffold(
         body: Center(
@@ -47,23 +55,11 @@ class _MainScreenState extends State<MainScreen> {
       );
     }
 
-    if (firebaseUser == null) {
-      return Scaffold(
-        body: Center(child: Text("No user logged in!")),
-      );
-    }
-
-    // Find the matching user from dummyUsers
-    currentUser = userState.currentUser;
-
-    // Store user in `UserState` for easy access later
-    // userState.setUser(currentUser);
-
     // Initialize screens after retrieving the logged-in user
     _pages = [
       ExploreScreen(),
       FollowingScreen(),
-      //MeScreen(currentUser),
+      MeScreen(currentUser: currentUser),
     ];
 
     return Scaffold(

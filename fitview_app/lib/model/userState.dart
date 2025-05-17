@@ -10,7 +10,7 @@ class UserState extends ChangeNotifier {
 
   // Getting registered Users
   List<User> get users => List.unmodifiable(_users);
-
+  
   // Get current user
   User? get currentUser => _currentUser;
 
@@ -42,47 +42,58 @@ class UserState extends ChangeNotifier {
 
   // Fetch the current user from Firestore
   Future<void> fetchCurrentUser() async {
-  try {
-    auth.User? firebaseUser = auth.FirebaseAuth.instance.currentUser;
-    if (firebaseUser == null) return; // No logged-in user
+    notifyListeners();
 
-    // Search Firestore for a matching user by email
-    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .where('email', isEqualTo: firebaseUser.email)
-        .limit(1)
-        .get();
+    try {
+      auth.User? firebaseUser = auth.FirebaseAuth.instance.currentUser;
+      if (firebaseUser == null) {
+        print("⚠️ No Firebase Auth user found.");
+        notifyListeners();
+        return;
+      }
 
-    if (querySnapshot.docs.isNotEmpty) {
-      DocumentSnapshot<Map<String, dynamic>> userDoc = querySnapshot.docs.first;
-      _currentUser = User(
-        email: userDoc['email'],
-        username: userDoc['username'],
-        name: userDoc['name'],
-        bio: userDoc['bio'],
-        height: userDoc['height'],
-        bodyType: _parseBodyType(userDoc['bodyType']),
-        preferredFit: _parseFit(userDoc['preferredFit']),
-      );
-    } else {
-      // No Firestore match found—create a default profile
-      _currentUser = User(
-        email: firebaseUser.email!,
-        username: firebaseUser.email!.split('@')[0],
-        name: "NO USER FOUND",
-        bio: "NEW USER DID NOT LOAD",
-        height: 170.0,
-        bodyType: BodyType.average,
-        preferredFit: Fit.regular,
-      );
+      print("✅ Firebase user detected: ${firebaseUser.email}");
+
+      // Search Firestore for a matching user by email
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: firebaseUser.email)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        DocumentSnapshot<Map<String, dynamic>> userDoc = querySnapshot.docs.first;
+        print("✅ User found in Firestore: ${userDoc['username']}");
+
+        _currentUser = User(
+          email: userDoc['email'],
+          username: userDoc['username'],
+          name: userDoc['name'],
+          bio: userDoc['bio'],
+          height: userDoc['height'],
+          bodyType: _parseBodyType(userDoc['bodyType']),
+          preferredFit: _parseFit(userDoc['preferredFit']),
+        );
+      } else {
+        print("⚠️ User NOT found in Firestore. Creating default profile.");
+
+        // No Firestore match found—create a default profile
+        _currentUser = User(
+          email: firebaseUser.email!,
+          username: firebaseUser.email!.split('@')[0],
+          name: "NO USER FOUND",
+          bio: "NEW USER DID NOT LOAD",
+          height: 170.0,
+          bodyType: BodyType.average,
+          preferredFit: Fit.regular,
+        );
+      }
+      notifyListeners(); // Update UI
+      print("Current user loaded!");
+    } catch (e) {
+      print("Error fetching user from Firestore: $e");
     }
-
-    notifyListeners(); // Update UI
-    print("Current user loaded!");
-  } catch (e) {
-    print("Error fetching user from Firestore: $e");
   }
-}
 
 
   // Removing Users
