@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'explore_screen.dart';
-import 'following_screen.dart';
-import 'me_screen.dart';
+import 'explore_screen/explore_screen.dart';
+import 'following_screen/following_screen.dart';
+import 'me_screen/me_screen.dart';
 import 'nav_bar.dart'; 
 import '../../model/user_model.dart';
 import '../../model/user_state.dart';

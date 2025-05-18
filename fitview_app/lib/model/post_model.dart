@@ -97,6 +97,21 @@ class ClothingItem {
   final ClothingSize size;
 
   ClothingItem({required this.type, required this.size});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'type': type.toString(),
+      'size': size.toString(),
+    };
+  }
+
+  static ClothingItem fromMap(Map<String, dynamic> map) {
+    return ClothingItem(
+      type: ClothingType.values.firstWhere((e) => e.toString() == map['type']),
+      size: ClothingSize.values.firstWhere((e) => e.toString() == map['size']),
+    );
+  }
+
 }
 
 class Post {
@@ -127,5 +142,35 @@ class Post {
     return File(photoUrl); // Turns the string into a usable File
   }
 
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'username': username,
+      'photoUrl': photoUrl,
+      'clothingItems': clothingItems.map((item) => item.toMap()).toList(),
+      'userHeight': userHeight,
+      'bodyType': bodyType.toString(),
+      'expectedFit': expectedFit.toString(),
+      'actualFit': actualFit.toString(),
+      'description': description ?? "", // Store empty string if null
+    };
+  }
+
+  // converting data from firestore to Post data
+  static Post fromMap(Map<String, dynamic> map) {
+    return Post(
+      id: map['id'],
+      username: map['username'],
+      photoUrl: map['photoUrl'],
+      clothingItems: (map['clothingItems'] as List)
+          .map((item) => ClothingItem.fromMap(item))
+          .toList(),
+      userHeight: map['userHeight'],
+      bodyType: BodyType.values.firstWhere((e) => e.toString() == map['bodyType']),
+      expectedFit: Fit.values.firstWhere((e) => e.toString() == map['expectedFit']),
+      actualFit: Fit.values.firstWhere((e) => e.toString() == map['actualFit']),
+      description: map['description'] ?? "",
+    );
+  }
 }
 

@@ -1,5 +1,6 @@
 import 'package:fitview_app/model/post_model.dart';
 import 'package:fitview_app/model/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 List<Post> dummyPosts = [
   Post(
@@ -54,3 +55,11 @@ List<Post> dummyPosts = [
     actualFit: Fit.oversized,
   ),
 ];
+
+
+Future<void> savePostsToFirestore(List<Post> posts) async {
+  for (var post in posts) {
+    await FirebaseFirestore.instance.collection('posts').doc(post.id).set(post.toMap());
+    print("✅ Post saved: ${post.id}");
+  }
+}

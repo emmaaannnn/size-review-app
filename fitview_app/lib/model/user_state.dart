@@ -52,8 +52,6 @@ class UserState extends ChangeNotifier {
         return;
       }
 
-      print("✅ Firebase user detected: ${firebaseUser.email}");
-
       // Search Firestore for a matching user by email
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
           .collection('users')
@@ -63,7 +61,6 @@ class UserState extends ChangeNotifier {
 
       if (querySnapshot.docs.isNotEmpty) {
         DocumentSnapshot<Map<String, dynamic>> userDoc = querySnapshot.docs.first;
-        print("✅ User found in Firestore: ${userDoc['username']}");
 
         _currentUser = User(
           email: userDoc['email'],
@@ -75,7 +72,6 @@ class UserState extends ChangeNotifier {
           preferredFit: _parseFit(userDoc['preferredFit']),
         );
       } else {
-        print("⚠️ User NOT found in Firestore. Creating default profile.");
 
         // No Firestore match found—create a default profile
         _currentUser = User(
