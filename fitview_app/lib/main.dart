@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:fitview_app/screens/mainScreen.dart'; // Import the MainScreen
+import 'package:fitview_app/screens/main_screen/main_screen.dart'; // Import the MainScreen
 import 'package:fitview_app/screens/auth_screen/auth_screen.dart'; // Import the LoginScreen
 import 'package:fitview_app/screens/auth_screen/auth_screen_new.dart'; // Import the ProfileSetupScreen
 
 import 'package:provider/provider.dart';
-import 'package:fitview_app/model/postState.dart';
-import 'package:fitview_app/model/userState.dart';
+import 'package:fitview_app/model/post_state.dart';
+import 'package:fitview_app/model/user_state.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitview_app/firebase_options.dart';

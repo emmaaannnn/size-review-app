@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:fitview_app/widget/postWidget.dart';
 import 'package:fitview_app/data/post_data.dart';
-import 'package:fitview_app/widget/newPost.dart';
-import 'package:fitview_app/widget/searchDelegate.dart';
+
+import '../new_post.dart';
+import 'search_widget.dart';
+import 'post_widget.dart';
+
 import 'package:fitview_app/model/post_model.dart';
-import 'package:fitview_app/model/postState.dart';
+import 'package:fitview_app/model/post_state.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});

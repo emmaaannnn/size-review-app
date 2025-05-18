@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'explore_screen.dart';
 import 'following_screen.dart';
 import 'me_screen.dart';
-import '../widget/bottomNavBar.dart'; // Import your BottomNavBar widget
-
-import '../model/user_model.dart';
-import '../model/userState.dart';
+import 'nav_bar.dart'; 
+import '../../model/user_model.dart';
+import '../../model/user_state.dart';
 
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;

@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 import 'package:fitview_app/model/user_model.dart';
-import 'package:fitview_app/model/userState.dart';
+import 'package:fitview_app/model/user_state.dart';
 
 class ProfileSetupScreen extends StatefulWidget {
   @override

@@ -6,8 +6,8 @@ import 'dart:io';
 import 'package:fitview_app/model/post_model.dart';
 import 'package:fitview_app/model/user_model.dart';
 
-import 'package:fitview_app/model/postState.dart';
-import 'package:fitview_app/model/userState.dart';
+import 'package:fitview_app/model/post_state.dart';
+import 'package:fitview_app/model/user_state.dart';
 
 class NewPost extends StatefulWidget {
   @override

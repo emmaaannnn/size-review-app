@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:fitview_app/model/userState.dart';
+import 'package:fitview_app/model/user_state.dart';
 import 'package:fitview_app/screens/auth_screen/auth_screen_new.dart';
 
 class AuthWidget {
