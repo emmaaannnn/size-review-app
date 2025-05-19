@@ -35,7 +35,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
       preferredFit: _selectedFit,
     );
 
-    await FirebaseFirestore.instance.collection('users').doc(newUser.email).set({
+    await FirebaseFirestore.instance.collection('users').doc(newUser.username).set({
       'email': newUser.email,
       'username': newUser.username,
       'name': newUser.name,
@@ -65,20 +65,33 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
             TextField(controller: _bioController, decoration: InputDecoration(labelText: "Bio")),
             TextField(controller: _heightController, decoration: InputDecoration(labelText: "Height (cm)"), keyboardType: TextInputType.number),
 
-            DropdownButton<BodyType>(
-              value: _selectedBodyType,
-              onChanged: (newValue) => setState(() => _selectedBodyType = newValue!),
-              items: BodyType.values.map((type) =>
-                DropdownMenuItem(value: type, child: Text(type.toString().split('.').last))
-              ).toList(),
+            Row(
+              children: [
+                Text("Your Body Type:"),
+                SizedBox(width: 10), // Adds some spacing between the text and dropdown
+                DropdownButton<BodyType>(
+                  value: _selectedBodyType,
+                  onChanged: (newValue) => setState(() => _selectedBodyType = newValue!),
+                  items: BodyType.values.map((type) =>
+                    DropdownMenuItem(value: type, child: Text(type.toString().split('.').last))
+                  ).toList(),
+                ),
+              ],
             ),
 
-            DropdownButton<Fit>(
-              value: _selectedFit,
-              onChanged: (newValue) => setState(() => _selectedFit = newValue!),
-              items: Fit.values.map((fit) =>
-                DropdownMenuItem(value: fit, child: Text(fit.toString().split('.').last))
-              ).toList(),
+
+            Row(
+              children: [
+                Text("Your Preffered Fit:"),
+                SizedBox(width: 10), // Adds some spacing between the text and dropdown
+                DropdownButton<Fit>(
+                  value: _selectedFit,
+                  onChanged: (newValue) => setState(() => _selectedFit = newValue!),
+                  items: Fit.values.map((fit) =>
+                    DropdownMenuItem(value: fit, child: Text(fit.toString().split('.').last))
+                  ).toList(),
+                ),
+              ],
             ),
 
             SizedBox(height: 20),
