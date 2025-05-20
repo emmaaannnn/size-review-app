@@ -1,31 +1,44 @@
 import 'package:flutter/foundation.dart';
 import 'package:fitview_app/model/post_model.dart';
-import 'package:fitview_app/data/post_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PostState extends ChangeNotifier {
-  final List<Post> _posts = List.from(dummyPosts);
+  List<Post> _posts = [];
 
-  // Getting Posts
-  List<Post> get posts => List.unmodifiable(_posts);
+  List<Post> get posts => List.unmodifiable(_posts); // Getter for posts
+
+  // Fetch posts from Firestore
+  Future<void> fetchPosts() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot =
+          await FirebaseFirestore.instance.collection('posts').get();
+
+      _posts = snapshot.docs.map((doc) => Post.fromMap(doc.data())).toList();
+      notifyListeners();
+    } catch (e) {
+      print("❌ Error fetching posts: $e");
+    }
+  }
 
   // Adding Post
-  void addPost(Post post) {
-    _posts.add(post);
-    notifyListeners(); // Notify listeners about the change
+  Future<void> addPost(Post post) async {
+    try {
+      await FirebaseFirestore.instance.collection('posts').doc(post.id).set(post.toMap());
+      _posts.add(post);
+      notifyListeners();
+    } catch (e) {
+      print("❌ Error adding post: $e");
+    }
   }
 
   // Removing Post
-  void removePost(Post post) {
-    _posts.insert(0, post);
-    notifyListeners(); // Notify listeners about the change
-  }
-
-  // Updating post
-  void updatePost(String id, Post updatedPost) {
-    final postIndex = _posts.indexWhere((post) => post.id == id);
-    if (postIndex != -1) {
-      _posts[postIndex] = updatedPost;
-      notifyListeners(); // Notify listeners about the change
+  Future<void> removePost(Post post) async {
+    try {
+      await FirebaseFirestore.instance.collection('posts').doc(post.id).delete();
+      _posts.remove(post);
+      notifyListeners();
+    } catch (e) {
+      print("❌ Error removing post: $e");
     }
   }
 }

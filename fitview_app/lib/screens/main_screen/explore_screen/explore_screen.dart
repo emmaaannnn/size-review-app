@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:fitview_app/data/post_data.dart';
 
 import '../new_post.dart';
 import 'search_widget.dart';
 import 'post_widget.dart';
 
-import 'package:fitview_app/model/post_model.dart';
 import 'package:fitview_app/model/post_state.dart';
 
 class ExploreScreen extends StatefulWidget {
@@ -19,7 +17,15 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _Explore extends State<ExploreScreen> {
-  List<Post> posts = List.from(dummyPosts); // Mutable List
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => _fetchPosts()); // Fetch posts when screen initializes
+  }
+
+  void _fetchPosts() {
+    Provider.of<PostState>(context, listen: false).fetchPosts();
+  }
 
   void _openAddExpenseOverlay() {
     showModalBottomSheet(

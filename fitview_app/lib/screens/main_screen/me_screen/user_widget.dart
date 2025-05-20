@@ -34,7 +34,13 @@ class _UserWidgetState extends State<UserWidget> {
               crossAxisAlignment: CrossAxisAlignment.end, // Align text to the right
               children: [
                 Text(widget.currentUser.name, style: TextStyle(fontWeight: FontWeight.bold)),
-                Text(widget.currentUser.bio ?? ""),
+                Container(
+                  width: 200,
+                  child: Text(
+                    widget.currentUser.bio ?? "",
+                    maxLines: 3,
+                  )
+                ),
               ],
             ),
           ],

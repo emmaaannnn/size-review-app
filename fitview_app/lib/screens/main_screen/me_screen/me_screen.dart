@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../new_post.dart';
 import 'user_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth; // Import FirebaseAuth
-import 'package:fitview_app/data/post_data.dart';
 
 class MeScreen extends StatefulWidget {
   final User currentUser;
@@ -66,14 +65,7 @@ class _Me extends State<MeScreen> {
                     onPressed: _logout,
                     child: Text("Log Out"),
                   ),
-                  SizedBox(height: 10), // Adds spacing between buttons
-                  ElevatedButton(
-                    onPressed: () async {
-                      await savePostsToFirestore(dummyPosts); // Pass list of posts
-                      print("✅ Posts saved to Firestore!");
-                    },
-                    child: Text("Save Posts to Firestore"),
-                  ),
+                  SizedBox(height: 10), // Adds spacing between buttons           
                 ],
               ),
             ),

@@ -34,9 +34,8 @@ class UserState extends ChangeNotifier {
       }
 
       notifyListeners(); // Notify UI that users list has changed
-      print("Users fetched successfully!");
     } catch (e) {
-      print("Error fetching users: $e");
+      return;
     }
   }
 
@@ -47,7 +46,6 @@ class UserState extends ChangeNotifier {
     try {
       auth.User? firebaseUser = auth.FirebaseAuth.instance.currentUser;
       if (firebaseUser == null) {
-        print("⚠️ No Firebase Auth user found.");
         notifyListeners();
         return;
       }
@@ -84,18 +82,10 @@ class UserState extends ChangeNotifier {
           preferredFit: Fit.regular,
         );
       }
-      notifyListeners(); // Update UI
-      print("Current user loaded!");
+      notifyListeners();
     } catch (e) {
-      print("Error fetching user from Firestore: $e");
+      return;
     }
-  }
-
-
-  // Removing Users
-  void removeUser(User user) {
-    _users.remove(user);
-    notifyListeners();
   }
 
   // Set logged-in user
