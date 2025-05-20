@@ -9,6 +9,8 @@ import 'package:fitview_app/model/user_model.dart';
 import 'package:fitview_app/model/post_state.dart';
 import 'package:fitview_app/model/user_state.dart';
 
+import 'package:firebase_storage/firebase_storage.dart';
+
 class NewPost extends StatefulWidget {
   @override
   State<NewPost> createState() => _NewPostState();
@@ -29,6 +31,22 @@ class _NewPostState extends State<NewPost> {
     setState(() {
       _enteredDescription = text;
     });
+  }
+
+  Future<String?> uploadImageToStorage(File imageFile, String username) async {
+    try {
+      String fileName = "uploads/${username}_${DateTime.now().millisecondsSinceEpoch}.jpg";
+      Reference storageRef = FirebaseStorage.instance.ref().child(fileName);
+
+      UploadTask uploadTask = storageRef.putFile(imageFile);
+      TaskSnapshot snapshot = await uploadTask;
+
+      String downloadURL = await snapshot.ref.getDownloadURL();
+      return downloadURL; // Get the image URL
+    } catch (e) {
+      print("❌ Error uploading image: $e");
+      return null;
+    }
   }
 
   Future<void> pickImage() async {
@@ -199,7 +217,7 @@ class _NewPostState extends State<NewPost> {
 
           // Submit Button
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (_selectedImage == null ||
                   _selectedClothingType == null ||
                   _selectedClothingSize == null ||
@@ -211,10 +229,17 @@ class _NewPostState extends State<NewPost> {
                 return;
               }
 
+              // Upload Image and Get Firebase URL
+              String? imageUrl = await uploadImageToStorage(_selectedImage!, currentUser!.username);
+              if (imageUrl == null) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Image upload failed!")));
+                return;
+              }
+
               Post newPost = Post(
                 id: DateTime.now().toString(),
-                username: currentUser!.username,
-                photoUrl: _selectedImage!.path,
+                username: currentUser.username,
+                photoUrl: imageUrl,
                 clothingItems: [
                   ClothingItem(
                     type: _selectedClothingType!,

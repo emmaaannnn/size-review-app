@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
+import 'dart:io';
+
 import 'package:fitview_app/model/post_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class PostState extends ChangeNotifier {
   List<Post> _posts = [];
@@ -30,6 +33,19 @@ class PostState extends ChangeNotifier {
       print("❌ Error adding post: $e");
     }
   }
+
+  // Uploading Image
+  Future<void> uploadImage(File imageFile) async {
+    String fileName = "uploads/${DateTime.now().millisecondsSinceEpoch}.jpg";
+    Reference storageRef = FirebaseStorage.instance.ref().child(fileName);
+
+    UploadTask uploadTask = storageRef.putFile(imageFile);
+    await uploadTask;
+
+    String downloadURL = await storageRef.getDownloadURL();
+    print("✅ Image uploaded successfully! URL: $downloadURL");
+  }
+
 
   // Removing Post
   Future<void> removePost(Post post) async {

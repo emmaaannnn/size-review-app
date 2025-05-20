@@ -35,7 +35,7 @@ class _UserWidgetState extends State<UserWidget> {
               children: [
                 Text(widget.currentUser.name, style: TextStyle(fontWeight: FontWeight.bold)),
                 Container(
-                  width: 200,
+                  width: 170,
                   child: Text(
                     widget.currentUser.bio ?? "",
                     maxLines: 3,
